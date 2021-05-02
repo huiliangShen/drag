@@ -14,15 +14,15 @@ export function removeListener(dom, event, cb) {
 }
 
 export function strictBoundary(value, min, max) {
-    if (min && value < min) {
-        return min
-    }
+	if (min && value < min) {
+		return min
+	}
 
-    if (max && value > max) {
-        return max
-    }
+	if (max && value > max) {
+		return max
+	}
 
-    return value
+	return value
 }
 
 const targetDom = {
@@ -35,10 +35,10 @@ const targetDom = {
 const containerDom = {
 	width: 0,
 	height: 0,
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0
+	left: 0,
+	top: 0,
+	right: 0,
+	bottom: 0
 }
 // 最大可移动距离
 const boundary = {
@@ -52,12 +52,12 @@ const moveObj = {
 	isMove: false,
 	x: 0,
 	y: 0,
-  left: 0,
-  top: 0
+	left: 0,
+	top: 0
 }
 
 const onMouseDown = (e) => {
-  const moveBox = document.getElementById("moveBox")
+	const moveBox = document.getElementById("moveBox")
 	const target = window.getComputedStyle(moveBox) || {}
 
 	let left = (target.left && parseFloat(target.left)) || 0
@@ -67,8 +67,8 @@ const onMouseDown = (e) => {
 	moveObj.isMove = true
 	moveObj.x = pageX
 	moveObj.y = pageY
-  moveObj.left = left
-  moveObj.top = top
+	moveObj.left = left
+	moveObj.top = top
 	// console.log('down', moveObj.x, moveObj.y)
 	addListener(document, "mousemove", onMouseMove)
 	addListener(document, "mouseup", onMouseUp)
@@ -77,26 +77,25 @@ const onMouseDown = (e) => {
 const onMouseMove = (e) => {
 	if (!moveObj.isMove) return false
 	const { pageX, pageY } = e
-	
 
 	const deltaX = pageX - moveObj.x
 	const deltaY = pageY - moveObj.y
 
-  let left = moveObj.left + deltaX
-  let top = moveObj.top + deltaY
+	let left = moveObj.left + deltaX
+	let top = moveObj.top + deltaY
 	// left += deltaX
 	if (left < boundary.minLeft) {
-    left = boundary.minLeft
+		left = boundary.minLeft
 	} else if (left > boundary.maxLeft) {
-    left = boundary.maxLeft
-  }
+		left = boundary.maxLeft
+	}
 
 	// top += deltaY
-  if (top < boundary.minTop) {
-    top = boundary.minTop
-  } else if (top > boundary.maxTop) {
-    top = boundary.maxTop
-  }
+	if (top < boundary.minTop) {
+		top = boundary.minTop
+	} else if (top > boundary.maxTop) {
+		top = boundary.maxTop
+	}
 
 	moveBox.style.left = `${left}px`
 	moveBox.style.top = `${top}px`
